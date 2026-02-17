@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
 
-export default function ApplyPage() {
+function ApplyForm() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const jobId = searchParams.get('jobId');
@@ -278,5 +278,17 @@ export default function ApplyPage() {
         </form>
       </div>
     </div>
+  );
+}
+
+export default function ApplyPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
+        <div className="text-slate-600 dark:text-slate-400">Loading...</div>
+      </div>
+    }>
+      <ApplyForm />
+    </Suspense>
   );
 }
